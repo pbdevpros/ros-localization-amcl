@@ -1,4 +1,4 @@
-## ros-tracker-bot
+## ros-localization-amcl
 
 Simulation of robot which reads in images from a camera, scans for a white object and moves towards the object.
 
