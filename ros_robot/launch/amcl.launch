@@ -10,13 +10,18 @@
     <param name="base_frame_id" value="robot_footprint"/>
     <param name="global_frame_id" value="map"/>
     
+    <param name="min_particles" value="50"/>
+    <param name="max_particles" value="1000"/>
     <param name="initial_pose_x" value="-5.5"/>
     <param name="initial_pose_y" value="5.5"/>
     <param name="initial_pose_a" value="4.712"/>
     <param name="update_min_d" value="0.05"/>
-    <param name="update_min_a" value="0.5236"/>
+    <param name="update_min_a" value="0.2613"/>
 
-    <param name="lazer_max_beams" value="35"/>
+    <param name="laser_max_beams" value="60"/>
+    <param name="laser_z_hit" value="1.0"/>
+    <param name="laser_z_rand" value="0.00"/>
+    <param name="laser_min_range" value="0.01"/>
 
   </node>
 
