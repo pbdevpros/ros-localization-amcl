@@ -12,7 +12,7 @@
 
   <!-- Launch other relevant files-->
   <include file="$(find ros_robot)/launch/robot_description.launch"/>
-  <include file="$(find ros_robot)/launch/amcl.launch"/>
+
 
   <!-- World File -->
   <arg name="world_file" default="$(find ros_robot)/worlds/HouseRobotSim.world"/>

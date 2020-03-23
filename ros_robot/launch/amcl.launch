@@ -1,23 +1,28 @@
 <launch>
-  <!-- Map Server -->
+  <!-- Map Server  -->
   <arg name="map_file" default="$(find ros_robot)/maps/map.yaml"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>  
   <!-- AMCL Node -->
   <node name="amcl" pkg="amcl" type="amcl" output="screen">
-    <remap from="scan" to="ros_robot/laser/scan"/>
+    <remap from="scan" to="/scan"/>
     <param name="odom_frame_id" value="odom"/>
     <param name="odom_model_type" value="diff-corrected"/>
     <param name="base_frame_id" value="robot_footprint"/>
     <param name="global_frame_id" value="map"/>
+    
+    <param name="initial_pose_x" value="-5.5"/>
+    <param name="initial_pose_y" value="5.5"/>
+    <param name="initial_pose_a" value="4.712"/>
+    <param name="update_min_d" value="0.05"/>
+    <param name="update_min_a" value="0.5236"/>
 
-    <!-- Could also define an initial pose here
-     <param name="initial_pose_x" value="0"/>
-     <param name="initial_pose_y" value="0"/> -->
+    <param name="lazer_max_beams" value="35"/>
+
   </node>
 
   <!-- Move Base -->
   <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
-    <remap from="scan" to="ros_robot/laser/scan"/>
+    <remap from="scan" to="/scan"/>
     <param name="base_global_planner" value="navfn/NavfnROS" />
     <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
     <!-- These params are provided from config downloaded with wget https://s3-us-west-1.amazonaws.com/udacity-robotics/Resource/where_am_i/config.zip

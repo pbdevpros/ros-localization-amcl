@@ -6,6 +6,7 @@ TrajectoryPlannerROS:
   max_vel_theta: 1.57 #1.5
 
   min_in_place_vel_theta: 0.314
+  meter_scoring: true # WARN in console recommended
 
   acc_lim_theta: 3.14
   acc_lim_x: 2.0
