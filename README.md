@@ -2,6 +2,16 @@
 
 Simulation of robot which reads in images from a camera, scans for a white object and moves towards the object.
 
+### Overview
+
+Using the AMCL algorithm, a robot is localized with respect to a global map in simulation, using ROS, and displayed using Gazebo and Rviz
+
+Reference-style: 
+![alt text][logo]
+
+[logo]: localized.png "Robot localization"
+
+
 ### Setup for Packages
 ```bash
 $ mkdir catkin_ws
