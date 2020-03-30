@@ -1,31 +1,41 @@
 <launch>
   <!-- Map Server  -->
-  <arg name="map_file" default="$(find ros_robot)/maps/map.yaml"/>
+  <arg name="map_file" default="$(find ros_robot)/maps/houseredone.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>  
   <!-- AMCL Node -->
   <node name="amcl" pkg="amcl" type="amcl" output="screen">
-    <remap from="scan" to="/scan"/>
-    <param name="odom_frame_id" value="odom"/>
-    <param name="odom_model_type" value="diff-corrected"/>
-    <param name="base_frame_id" value="robot_footprint"/>
-    <param name="global_frame_id" value="map"/>
+    <remap from="scan" to="/scan"/>							            <!-- lazer scan topic. Should match with ros_robot.xacro & /config files -->
+    <param name="odom_frame_id" value="odom"/>				      <!-- DO NOT CHANGE, standard odom frame -->
+    <param name="odom_model_type" value="diff-corrected"/>	<!-- DO NOT CHANGE, standard for differential drive -->
+    <param name="base_frame_id" value="robot_footprint"/>	  <!-- name of robot model defined in robotBaseFrame in ros_robot.gazebo -->
+    <param name="global_frame_id" value="map"/>				      <!-- DO NOT CHANGE, standard global frame -->
     
-    <param name="min_particles" value="50"/>
-    <param name="max_particles" value="1000"/>
-    <param name="initial_pose_x" value="-5.5"/>
-    <param name="initial_pose_y" value="5.5"/>
-    <param name="initial_pose_a" value="4.712"/>
-    <param name="update_min_d" value="0.05"/>
-    <param name="update_min_a" value="0.2613"/>
+    <param name="min_particles" value="200"/>		  <!-- high min means larger number of estimates for amcl algo -->
+    <param name="max_particles" value="1000"/>		<!-- high max means larger number of estimates for amcl algo -->
+    <param name="initial_pose_x" value="-5.5"/>	<!-- initial pose, should match world.launch file -->
+    <param name="initial_pose_y" value="5.5"/>		<!-- initial pose, should match world.launch file -->
+    <param name="initial_pose_a" value="1.5708"/>  <!-- initial pose, should match world.launch file -->
+    <param name="update_min_d" value="0.05"/>		  <!-- when low, updates will take place more often for translation movement -->
+    <param name="update_min_a" value="0.2613"/>		<!-- when low, updates will take place more often for angular movement -->
 
-    <param name="laser_max_beams" value="60"/>
-    <param name="laser_z_hit" value="1.0"/>
-    <param name="laser_z_rand" value="0.00"/>
-    <param name="laser_min_range" value="0.01"/>
+    <param name="kld_err" value="0.01"/>			    <!-- Max error between true dist and the estimated dist. -->
+    <param name="kld_z" value="0.99"/>				    <!-- low odometry noise expected for sim enviroment -->
+    <param name="odom_alpha1" value="0.002"/>		  <!-- low odometry noise expected for sim enviroment -->
+    <param name="odom_alpha2" value="0.002"/>		  <!-- low odometry noise expected for sim enviroment -->
+    <param name="odom_alpha3" value="0.002"/>		  <!-- low odometry noise expected for sim enviroment -->
+    <param name="odom_alpha4" value="0.002"/>		  <!-- low odometry noise expected for sim enviroment -->
+
+    <param name="laser_max_beams" value="720"/>		<!-- specified in hokuyo params in ros_robot.xacro -->
+    <param name="laser_min_range" value="0.1"/> 	<!-- specified in hokuyo params in ros_robot.xacro -->
+    <param name="laser_max_range" value="30.0"/>	<!-- specified in hokuyo params in ros_robot.xacro -->
+    <param name="laser_z_hit" value="0.90"/> 		  <!-- decrease confidence in measurement -->
+    <param name="laser_z_rand" value="0.5"/> 		  <!-- high z_rand gives higher measurement noise -->
+    <param name="laser_sigma_hit" value="0.10"/>	<!-- high sigma_hit gives higher measurement noise -->
+    <param name="laser_likelihood_max_dist" value="5.0"/>	<!-- max distance to do obstacle avoidance -->
 
   </node>
 
-  <!-- Move Base -->
+  <!-- Move Base --> <!-- DO NOT CHANGE Config paths, ensure scan topic matches with lazer sensor  -->
   <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
     <remap from="scan" to="/scan"/>
     <param name="base_global_planner" value="navfn/NavfnROS" />
