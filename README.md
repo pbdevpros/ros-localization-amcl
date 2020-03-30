@@ -33,7 +33,11 @@ $ cd src
 $ rosrun teleop_twist_keyboard teleop_twist_keyboard.py # launch teleop keyboard control for robot
 ```
 
-### map generation
+### Notes
+The ```worlds/``` folder is basic world files which were used for map generation.
+The ```rviz...``` files are configuration files for Rviz
+
+### Map Generation
 In order to create the global map used by the robot, the pgm_map_creator package was used. 
 This has a dependency on  libignition-math2-dev and protobuf-compiler to compile the map creator.
 Use the following to install these libraries.
